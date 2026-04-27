@@ -26,73 +26,61 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 16);
+    const handleScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
-        scrolled ? "py-3" : "py-5"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        scrolled
+          ? "border-b border-white/10"
+          : "border-b border-transparent"
       )}
+      style={{
+        background:  "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
+      }}
     >
-      {/* Glassmorphism container */}
-      <div
-        className={cn(
-          "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
-          "rounded-2xl transition-all duration-500",
-          scrolled
-            ? [
-                "glass-scrolled",
-                "shadow-[0_8px_32px_rgba(25,43,69,0.12)]",
-                "dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]",
-              ]
-            : "glass-top"
-        )}
-      >
-        <nav className="flex items-center justify-between h-14 sm:h-16">
-          {/* ── LEFT: Logo ── */}
-          <Link
-                href="/"
-                className="flex items-center gap-2.5 shrink-0 group"
-                aria-label="Home"
-                >
-                {/* Logo Image */}
-                <div className="relative w-20 sm:w-28 md:w-32 aspect-[4/3]">
-  <Image
-    src="/logo.png"
-    alt="Acme Logo"
-    fill
-    className="object-contain"
-    priority
-  />
-</div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <nav className="flex items-center justify-between h-16 md:h-20">
 
-                </Link>
+          {/* Logo */}
+          <Link href="/" className="flex items-center shrink-0" aria-label="Orion World">
+            <div className="relative" style={{ width: "110px", height: "44px" }}>
+              <Image
+                src="/logo.png"
+                alt="Orion World"
+                fill
+                className="object-contain"
+                priority
+                style={{
+                  filter: "brightness(0) invert(1)",
+                  opacity: scrolled ? 1 : 0.92,
+                }}
+              />
+            </div>
+          </Link>
 
-          {/* ── CENTER: Nav links (hidden on mobile) ── */}
-          <ul className="hidden md:flex items-center gap-1 lg:gap-2">
+          {/* Desktop nav */}
+          <ul className="hidden md:flex items-center gap-8">
             {navLinks.map(({ label, href }) => (
               <li key={href}>
                 <Link
                   href={href}
                   onClick={() => setActiveLink(href)}
                   className={cn(
-                    "relative px-4 py-2 rounded-xl text-sm font-sans font-medium transition-all duration-200",
-                    "hover:text-[#2d6799] dark:hover:text-white",
-                    "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2",
-                    "after:h-0.5 after:w-0 after:rounded-full",
-                    "after:bg-[#2d6799] dark:after:bg-white/70",
-                    "after:transition-all after:duration-300 hover:after:w-4/5",
+                    "relative font-sans text-sm tracking-wide transition-all duration-200",
+                    "after:absolute after:-bottom-0.5 after:left-0",
+                    "after:h-px after:w-0 after:bg-white/60",
+                    "after:transition-all after:duration-300 hover:after:w-full",
                     activeLink === href
-                      ? [
-                          "text-[#2d6799] dark:text-white",
-                          "bg-[#2d6799]/10 dark:bg-white/10",
-                          "after:w-4/5",
-                        ]
-                      : "text-foreground/75"
+                      ? "text-white after:w-full"
+                      : "text-white/60 hover:text-white"
                   )}
                 >
                   {label}
@@ -101,33 +89,29 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* ── RIGHT: Contact link + Mobile menu ── */}
-          <div className="flex items-center gap-3">
-            {/* Contact — text link, NOT a button */}
+          {/* Right: Contact + mobile toggle */}
+          <div className="flex items-center gap-4">
             <Link
               href="/contact"
               className={cn(
-                "hidden md:inline-flex items-center gap-1.5",
-                "text-sm font-sans font-semibold tracking-wide",
-                "text-[#192b45] dark:text-white",
-                "border border-[#192b45]/20 dark:border-white/20",
-                "px-5 py-2 rounded-xl",
-                "backdrop-blur-sm",
-                "hover:border-[#2d6799] hover:text-[#2d6799]",
-                "dark:hover:border-white/60 dark:hover:text-white",
-                "transition-all duration-200"
+                "hidden md:inline-flex items-center",
+                "font-sans text-sm tracking-widest uppercase",
+                "text-white/80 hover:text-white",
+                "border border-white/25 hover:border-white/50",
+                "px-6 py-2.5 transition-all duration-200"
               )}
+              style={{ letterSpacing: "0.12em" }}
             >
               Contact
             </Link>
 
-            {/* Mobile hamburger via Sheet */}
+            {/* Mobile hamburger */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden rounded-xl text-foreground hover:bg-foreground/10"
+                  className="md:hidden text-white hover:bg-white/10 rounded-none"
                   aria-label="Open menu"
                 >
                   <Menu className="w-5 h-5" />
@@ -136,43 +120,36 @@ export default function Navbar() {
 
               <SheetContent
                 side="right"
-                className={cn(
-                  "w-72 sm:w-80 p-0 border-l border-border/40",
-                  "bg-white/80 dark:bg-[#192b45]/80 backdrop-blur-2xl"
-                )}
+                className="w-72 p-0 border-l border-white/10 rounded-none"
+                style={{ background: "#192b45" }}
               >
-                {/* Mobile drawer header */}
-                <div className="flex items-center justify-between px-6 py-5 border-b border-border/30">
-                  <Link
-                    href="/"
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2.5"
-                  >
-                    <div className="relative w-8 h-8">
-                      <div className="absolute inset-0 rounded-xl rotate-12 bg-gradient-to-br from-[#2d6799] to-[#192b45] dark:from-[#2d6799] dark:to-white/90" />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-white font-heading font-bold text-sm">A</span>
-                      </div>
+                {/* Drawer header */}
+                <div className="flex items-center justify-between px-8 py-6 border-b border-white/10">
+                  <Link href="/" onClick={() => setMobileOpen(false)}>
+                    <div className="relative" style={{ width: "90px", height: "36px" }}>
+                      <Image
+                        src="/logo.png"
+                        alt="Orion World"
+                        fill
+                        className="object-contain"
+                        style={{ filter: "brightness(0) invert(1)" }}
+                      />
                     </div>
-                    <span className="font-heading font-bold text-lg text-foreground">
-                      Acme
-                    </span>
                   </Link>
-
                   <SheetClose asChild>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="rounded-xl text-foreground hover:bg-foreground/10"
+                      className="text-white/60 hover:text-white hover:bg-white/10 rounded-none"
                       aria-label="Close menu"
                     >
-                      <X className="w-5 h-5" />
+                      <X className="w-4 h-4" />
                     </Button>
                   </SheetClose>
                 </div>
 
-                {/* Mobile nav links */}
-                <ul className="flex flex-col gap-1 p-4">
+                {/* Mobile links */}
+                <ul className="flex flex-col px-8 py-6 gap-1">
                   {navLinks.map(({ label, href }) => (
                     <li key={href}>
                       <SheetClose asChild>
@@ -180,12 +157,13 @@ export default function Navbar() {
                           href={href}
                           onClick={() => setActiveLink(href)}
                           className={cn(
-                            "flex items-center w-full px-4 py-3 rounded-xl",
-                            "text-base font-sans font-medium transition-all duration-200",
+                            "block py-4 font-sans text-sm tracking-widest uppercase transition-colors duration-200",
+                            "border-b border-white/8",
                             activeLink === href
-                              ? "bg-[#2d6799]/15 text-[#2d6799] dark:text-white dark:bg-white/15"
-                              : "text-foreground/75 hover:bg-foreground/8 hover:text-foreground"
+                              ? "text-white"
+                              : "text-white/45 hover:text-white/80"
                           )}
+                          style={{ letterSpacing: "0.15em" }}
                         >
                           {label}
                         </Link>
@@ -194,20 +172,12 @@ export default function Navbar() {
                   ))}
                 </ul>
 
-                {/* Mobile Contact */}
-                <div className="px-4 pt-2">
+                <div className="px-8 pt-4">
                   <SheetClose asChild>
                     <Link
                       href="/contact"
-                      className={cn(
-                        "flex items-center justify-center w-full px-5 py-3 rounded-xl",
-                        "text-sm font-sans font-semibold tracking-wide",
-                        "border border-[#192b45]/25 dark:border-white/25",
-                        "text-[#192b45] dark:text-white",
-                        "hover:border-[#2d6799] hover:text-[#2d6799]",
-                        "dark:hover:border-white/60",
-                        "transition-all duration-200"
-                      )}
+                      className="block w-full text-center font-sans text-sm tracking-widest uppercase py-3 text-white/80 hover:text-white border border-white/25 hover:border-white/50 transition-all duration-200"
+                      style={{ letterSpacing: "0.15em" }}
                     >
                       Contact
                     </Link>
@@ -218,42 +188,6 @@ export default function Navbar() {
           </div>
         </nav>
       </div>
-
-      {/* Global glass styles scoped to this component */}
-      <style jsx global>{`
-        .glass-top {
-          background: transparent;
-        }
-
-        .glass-scrolled {
-          background: rgba(255, 255, 255, 0.65);
-          backdrop-filter: blur(20px) saturate(180%);
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.55);
-        }
-
-        .dark .glass-scrolled {
-          background: rgba(25, 43, 69, 0.55);
-          backdrop-filter: blur(20px) saturate(160%);
-          -webkit-backdrop-filter: blur(20px) saturate(160%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Top state — subtle glass even at top */
-        .glass-top {
-          background: rgba(255, 255, 255, 0.3);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .dark .glass-top {
-          background: rgba(25, 43, 69, 0.25);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-      `}</style>
     </header>
   );
 }
