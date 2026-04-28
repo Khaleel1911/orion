@@ -59,10 +59,9 @@ export default function AboutPage() {
             </motion.p>
             <motion.p
               variants={fadeUp}
-              className="mt-4 text-md text-muted-foreground/80 max-w-xl mx-auto"
+              className="mt-4 text-md text-muted-foreground/80 max-w-xl mx-auto italic"
             >
-              Crafted for the discerning architect and luxury homeowner, our windows combine German
-              precision engineering with sleek Italian aesthetics.
+              Built on clarity. Driven by execution.
             </motion.p>
           </motion.div>
         </section>
@@ -88,38 +87,173 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ===== FOUNDER'S MESSAGE ===== */}
-        <section className="py-20 px-6 md:px-16">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-5 gap-10 items-center">
-              <div className="md:col-span-2 flex justify-center">
-                <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-primary/20 shadow-xl">
-                  <img
-                    src="https://placehold.co/400x400/e2e8f0/2d6799?text=Founder"
-                    alt="Founder portrait placeholder"
-                    className="object-cover w-full h-full"
-                  />
+        {/* ===== THE MINDS BEHIND ORION WORLD (CO-FOUNDERS) ===== */}
+        <section className="py-20 px-6 md:px-16 bg-background">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-heading font-bold">The Minds Behind Orion World</h2>
+              <div className="h-0.5 w-16 bg-primary/40 mx-auto my-3" />
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-2">
+                Built on clarity. Driven by execution.
+              </p>
+            </motion.div>
+
+            {/* Intro statement */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-3xl mx-auto text-center mb-16"
+            >
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Orion World was not created to follow an industry standard — it was built to redefine it.
+                At its core are two founders who saw a gap where most overlooked it: the absence of structure,
+                consistency, and engineering-led thinking in fenestration.
+              </p>
+              <p className="text-muted-foreground text-lg leading-relaxed mt-4">
+                What began as observation evolved into intent — and eventually, into Orion World.
+              </p>
+            </motion.div>
+
+            {/* Co-Founders Grid */}
+            <div className="grid md:grid-cols-2 gap-10 md:gap-12 mb-20">
+              {/* Vidhan Agrawal */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-card rounded-2xl border border-border shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/30 shadow-md mb-5">
+                      <img
+                        src="https://placehold.co/400x400/e2e8f0/2d6799?text=Vidhan"
+                        alt="Vidhan Agrawal"
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-heading font-bold">Vidhan Agrawal</h3>
+                    <p className="text-primary font-medium mt-1">Co-Founder | Strategy & Systems</p>
+                    <div className="h-0.5 w-12 bg-primary/40 my-4" />
+                    <p className="text-muted-foreground leading-relaxed">
+                      Vidhan brings a systems-first approach to Orion World — focusing on how things should work,
+                      not just how they are done. Early in his journey, he recognized a recurring problem across
+                      projects: lack of standardization, inconsistent execution, and solutions driven more by
+                      shortcuts than by design. Instead of accepting this as industry reality, he chose to question it.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      His focus has since been on building clarity into complexity — creating structured processes,
+                      defining product systems, and ensuring that every solution delivered is engineered, not improvised.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="md:col-span-3 space-y-5">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-heading">Founder's Message</h2>
-                  <div className="h-0.5 w-12 bg-primary/50 mt-2 mb-4" />
+              </motion.div>
+
+              {/* Rishav Dahlan */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-card rounded-2xl border border-border shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+              >
+                <div className="p-6 md:p-8">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/30 shadow-md mb-5">
+                      <img
+                        src="https://placehold.co/400x400/e2e8f0/2d6799?text=Rishav"
+                        alt="Rishav Dahlan"
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                    <h3 className="text-2xl font-heading font-bold">Rishav Dahlan</h3>
+                    <p className="text-primary font-medium mt-1">Co-Founder | Execution & Delivery</p>
+                    <div className="h-0.5 w-12 bg-primary/40 my-4" />
+                    <p className="text-muted-foreground leading-relaxed">
+                      Rishav leads execution with a deep understanding of what it takes to translate design into
+                      reality. With hands-on involvement across sites, fabrication, and installation, he has seen
+                      firsthand where most projects fail — not in design, but in execution. Misalignment between
+                      planning and on-ground delivery often leads to compromised outcomes.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      His approach is simple: eliminate that gap. At Orion World, he ensures that every system is
+                      not only designed with intent but also executed with accuracy — from coordinating teams to
+                      overseeing installations, without compromise.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  "Quality is not an act, but a habit that defines our legacy. At Orion World, we are driven
-                  by a passion for architectural excellence and a commitment to precision that stands
-                  the test of time."
+              </motion.div>
+            </div>
+
+            {/* Shared Vision & What This Means For You */}
+            <div className="grid md:grid-cols-2 gap-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-primary/5 rounded-xl border border-border p-6 md:p-8"
+              >
+                <h3 className="text-2xl font-heading font-semibold mb-4 flex items-center gap-2">
+                  <span className="text-primary">✦</span> A Shared Vision
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Together, they built Orion World on a clear belief: Good design is not enough — it must be backed
+                  by engineering, and delivered with precision. By combining structured thinking with hands-on
+                  execution, Orion World operates as a complete system — not just a supplier.
                 </p>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  "We don't just build windows; we create the frames through which you experience your
-                  life's best moments. Thank you for trusting us to be part of your home."
-                </p>
-                <div className="pt-2">
-                  <p className="font-heading text-xl font-semibold">Vidhan Agrawal</p>
-                  <p className="text-sm text-muted-foreground">Founder, Orion World</p>
+                <div className="mt-5 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">✔</span>
+                    <span className="text-muted-foreground">Thought through</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">✔</span>
+                    <span className="text-muted-foreground">Technically sound</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">✔</span>
+                    <span className="text-muted-foreground">Precisely executed</span>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-secondary/5 rounded-xl border border-border p-6 md:p-8"
+              >
+                <h3 className="text-2xl font-heading font-semibold mb-4 flex items-center gap-2">
+                  <span className="text-secondary-foreground">⤴</span> What This Means For You
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  When you work with Orion World, you’re not just choosing a product. You’re choosing a team that:
+                </p>
+                <div className="mt-5 space-y-3">
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-muted-foreground">Understands design intent</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-muted-foreground">Engineers every solution</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-muted-foreground">Executes without compromise</span>
+                  </div>
+                </div>
+                <p className="text-muted-foreground text-sm italic mt-5 border-t border-border pt-4">
+                  Because in modern spaces, every opening matters — and how it is built defines how it performs.
+                </p>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -159,17 +293,7 @@ export default function AboutPage() {
               ))}
             </div>
 
-            {/* Additional visual touch: brand summary */}
-            <div className="mt-16 flex flex-wrap justify-center gap-8 text-center">
-              <div className="px-6 py-3 bg-muted/50 rounded-full">
-                <span className="font-bold text-primary">Italian Design</span>
-                <span className="text-muted-foreground text-sm ml-2">Minimalist profiles, maximum glass area</span>
-              </div>
-              <div className="px-6 py-3 bg-muted/50 rounded-full">
-                <span className="font-bold text-primary">Precision Engineering</span>
-                <span className="text-muted-foreground text-sm ml-2">High-performance hardware</span>
-              </div>
-            </div>
+            
           </div>
         </section>
 
