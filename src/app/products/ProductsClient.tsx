@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Navbar from '@/components/Navbar'
@@ -28,7 +28,7 @@ function CategoryCard({
   onSelect: (catId: string, subId: string) => void
 }) {
   const firstSubId = category.subcategories?.[0]?.id ?? ''
-  const imgSrc = CATEGORY_IMAGES[category.id] ?? null
+  const imgSrc = category.image ?? CATEGORY_IMAGES[category.id] ?? null
   const canOpenCategory = !category.disabled && Boolean(firstSubId)
 
   return (
@@ -121,6 +121,24 @@ export default function ProductsClient() {
 
   const activeCat = params.get('cat')
   const activeSub = params.get('sub')
+
+  /** Old uPVC sub-IDs redirect to merged `upvc-systems` */
+  useEffect(() => {
+    if (activeCat !== 'upvc' || !activeSub) return
+    const legacy: Record<string, string> = {
+      'sliding-upvc-windows': 'upvc-systems',
+      'casement-upvc-windows': 'upvc-systems',
+      'tilt-turn': 'upvc-systems',
+      'slide-fold-doors': 'upvc-systems',
+      'internal-doors': 'upvc-systems',
+      'sliding-doors': 'upvc-systems',
+      'villa-windows': 'upvc-systems',
+    }
+    const nextSub = legacy[activeSub]
+    if (nextSub) {
+      router.replace(`/products?cat=upvc&sub=${nextSub}`, { scroll: false })
+    }
+  }, [activeCat, activeSub, router])
 
   const handleSelect = useCallback(
     (catId: string, subId: string) => {

@@ -16,7 +16,8 @@ export default function ProductCard({ product, catId, subId }: ProductCardProps)
   const href = `/products/${catId}/${subId}/${product.id}`
   const productName = product.name ?? 'Unnamed Product'
   const highlights = product.highlights ?? []
-  const coverImage = product.crossSectionImages?.[0] ?? null
+  const coverImage =
+    product.cardCoverImage ?? product.crossSectionImages?.[0] ?? null
 
   return (
     <motion.article
