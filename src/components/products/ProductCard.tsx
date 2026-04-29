@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import type { Product } from '@/data/products'
@@ -13,19 +14,33 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, catId, subId }: ProductCardProps) {
   const href = `/products/${catId}/${subId}/${product.id}`
+  const productName = product.name ?? 'Unnamed Product'
+  const highlights = product.highlights ?? []
+  const coverImage = product.crossSectionImages?.[0] ?? null
 
   return (
     <motion.article
       className="group flex flex-col rounded-2xl overflow-hidden bg-card border border-border shadow-sm"
       whileHover={{ y: -5, boxShadow: '0 20px 40px -12px rgba(25, 43, 69, 0.18)' }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
+      transition={{ duration: 0.25 }}
     >
       {/* Gradient image area */}
       <Link href={href} className="block">
-        <div
-          className="relative w-full aspect-[4/3] overflow-hidden"
-          style={{ background: product.gradient }}
-        >
+        <div className="relative w-full aspect-[4/3] overflow-hidden">
+          {coverImage ? (
+            <Image
+              src={coverImage}
+              alt={`${productName} cover`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{ background: product.gradient ?? 'linear-gradient(135deg, #192b45 0%, #2d6799 100%)' }}
+            />
+          )}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.09)_0%,transparent_65%)]" />
           <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-black/20 to-transparent" />
           {product.badge && (
@@ -43,23 +58,27 @@ export default function ProductCard({ product, catId, subId }: ProductCardProps)
       {/* Content */}
       <div className="flex flex-col flex-1 p-5">
         <h3 className="font-heading text-[11px] tracking-[0.18em] uppercase text-primary mb-1.5 leading-snug">
-          {product.name}
+          {productName}
         </h3>
-        <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 flex-1">
-          {product.tagline}
-        </p>
+        {product.tagline && (
+          <p className="font-body text-sm text-muted-foreground leading-relaxed mb-4 flex-1">
+            {product.tagline}
+          </p>
+        )}
 
         {/* Highlights */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {product.highlights.map((h, i) => (
-            <span
-              key={i}
-              className="font-sans text-[11px] tracking-wide bg-muted text-foreground/70 px-3 py-1 rounded-full"
-            >
-              {h}
-            </span>
-          ))}
-        </div>
+        {highlights.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {highlights.map((h, i) => (
+              <span
+                key={i}
+                className="font-sans text-[11px] tracking-wide bg-muted text-foreground/70 px-3 py-1 rounded-full"
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* CTA */}
         <Link

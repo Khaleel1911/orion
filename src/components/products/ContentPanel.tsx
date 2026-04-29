@@ -14,7 +14,7 @@ interface ContentPanelProps {
 
 const fadeIn = {
   hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 }
 
 const stagger = {
@@ -23,7 +23,7 @@ const stagger = {
 
 export default function ContentPanel({ categories, activeCat, activeSub, onSelect }: ContentPanelProps) {
   const cat = categories.find(c => c.id === activeCat)
-  const sub = cat?.subcategories.find(s => s.id === activeSub)
+  const sub = cat?.subcategories?.find(s => s.id === activeSub)
 
   // ─── Welcome / landing state ───────────────────────────────────────
   if (!cat || !sub) {
@@ -59,7 +59,7 @@ export default function ContentPanel({ categories, activeCat, activeSub, onSelec
               key={c.id}
               variants={fadeIn}
               onClick={() => {
-                if (!c.disabled && c.subcategories[0]) {
+                if (!c.disabled && c.subcategories?.[0]) {
                   onSelect(c.id, c.subcategories[0].id)
                 }
               }}
@@ -95,7 +95,8 @@ export default function ContentPanel({ categories, activeCat, activeSub, onSelec
   }
 
   // ─── Subcategory products view ─────────────────────────────────────
-  const hasProducts = sub.products.length > 0
+  const products = sub.products ?? []
+  const hasProducts = products.length > 0
 
   return (
     <AnimatePresence mode="wait">
@@ -104,7 +105,7 @@ export default function ContentPanel({ categories, activeCat, activeSub, onSelec
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
+        transition={{ duration: 0.35 }}
       >
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-6">
@@ -126,26 +127,20 @@ export default function ContentPanel({ categories, activeCat, activeSub, onSelec
         {/* Divider */}
         <div className="h-px bg-border mb-8" />
 
-        {/* Products grid */}
+        {/* Products grid – always two columns from md upwards, one column on mobile */}
         {hasProducts ? (
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            animate="visible"
-            className={`grid gap-5 ${
-              sub.products.length === 1
-                ? 'grid-cols-1 max-w-sm'
-                : sub.products.length === 2
-                ? 'grid-cols-1 sm:grid-cols-2'
-                : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-            }`}
-          >
-            {sub.products.map(product => (
-              <motion.div key={product.id} variants={fadeIn}>
-                <ProductCard product={product} catId={cat.id} subId={sub.id} />
-              </motion.div>
-            ))}
-          </motion.div>
+           <motion.div
+    variants={stagger}
+    initial="hidden"
+    animate="visible"
+    className="grid grid-cols-1 lg:grid-cols-2 gap-5"
+  >
+    {products.map(product => (
+      <motion.div key={product.id} variants={fadeIn}>
+        <ProductCard product={product} catId={cat.id} subId={sub.id} />
+      </motion.div>
+    ))}
+  </motion.div>
         ) : (
           // Coming soon state (for Future category)
           <div className="flex flex-col items-center justify-center py-24 text-center">

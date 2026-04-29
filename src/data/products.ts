@@ -5,29 +5,32 @@ export interface ProductSpec {
 
 export interface Product {
   id: string
-  name: string
-  tagline: string
-  highlights: [string, string]
-  gradient: string
+  name?: string
+  tagline?: string
   badge?: string
-  // Detail page fields
-  fullDescription: string
-  specs: ProductSpec[]
-  features: string[]
+  gradient?: string        // kept for backward compatibility but not used in hero now
+  highlights?: string[]
+  fullDescription?: string
+  specs?: ProductSpec[]
+  features?: string[]
+  images?: string[]        // gallery images
+  heroImage?: string       // new: main hero image
+  crossSectionImages?: string[]  // new: diagrams
+  brochureUrl?: string     // new: PDF link
 }
 
 export interface SubCategory {
   id: string
   name: string
-  description: string
-  products: Product[]
+  description?: string
+  products?: Product[]
 }
 
 export interface Category {
   id: string
   name: string
-  description: string
-  subcategories: SubCategory[]
+  description?: string
+  subcategories?: SubCategory[]
   disabled?: boolean
 }
 
@@ -47,55 +50,59 @@ export const categories: Category[] = [
         products: [
           {
             id: 'orion-core-25',
-            name: 'Orion Core Series',
-            tagline: 'Entry-level precision sliding with 25mm aluminium profile depth',
-            highlights: ['25mm Profile Depth', 'Thermally Broken Frame'],
+            name: 'Orion 25mm Window Core Series',
+            tagline: 'Entry-level 25mm sliding system with compact profile geometry and practical glazing support',
+            highlights: ['25mm Sash Width', 'Max Height 2135mm', 'Single & Double Glazing'],
             gradient: 'linear-gradient(135deg, #192b45 0%, #2d6799 100%)',
             badge: '25mm',
             fullDescription:
-              'The Orion Core Series delivers reliable, thermally efficient sliding performance in a refined 25mm aluminium profile. Designed as the entry point into the Orion sliding range, it combines robust construction with clean architectural lines, making it ideal for residential and light commercial glazed openings where value and performance must coexist.',
+              'The Orion 25mm Window Core Series is the foundational sliding platform in the Orion range. It is designed for projects that need clean aesthetics, reliable sliding action, and practical glazing combinations in a compact profile. The system supports multiple track configurations and flexible roller/locking selections for everyday residential and light commercial use.',
             specs: [
-              { label: 'Profile Depth', value: '25mm' },
-              { label: 'Frame Material', value: 'Aluminium Alloy 6063-T5' },
-              { label: 'Thermal Break', value: 'Polyamide Insert' },
-              { label: 'Glazing Capacity', value: 'Up to 24mm DGU' },
-              { label: 'Maximum Sash Weight', value: '80 kg' },
-              { label: 'Finish Options', value: 'Powder Coat / Anodised' },
+              { label: 'Maximum Window Height', value: '2135mm (up to approx. 7 ft)' },
+              { label: 'Sash Dimensions', value: 'Height 62mm / Width 25mm' },
+              { label: 'Interlocking', value: 'Slim Interlock 20mm, Standard Interlock 66mm' },
+              { label: 'Glass Range', value: 'Single 5-8mm, Double up to 18mm' },
+              { label: 'Track Depth - 2 Track', value: 'Horizontal 28mm/72mm, Vertical 31mm/16mm' },
+              { label: 'Track Depth - 3 Track', value: 'Horizontal 28mm/72mm, Vertical 31mm/16mm' },
+              { label: 'Track Depth - 4 Track', value: 'Top/Bottom 28mm/72mm, Vertical 31mm/16mm' },
+              { label: 'Corner Joint Options', value: 'Track 90 deg, Sash 90 deg/45 deg, Slim Interlock 90 deg' },
             ],
             features: [
-              'Thermally broken frame reduces heat transfer for improved energy efficiency',
-              'Precision extruded 6063-T5 aluminium for structural rigidity and longevity',
-              'Smooth-glide stainless steel roller system with adjustable height',
-              'Compatible with standard 24mm double glazing units',
-              'Available in a full RAL powder coat colour spectrum',
-              'Low-profile aluminium threshold suitable for flush floor applications',
+              'Supports single and double glazing combinations for flexible project requirements',
+              'Compatible with 2-track, 3-track, and 4-track sliding layouts',
+              'Roller options include fixed single, fixed double, and adjustable double roller',
+              'Locking can be configured as single-point or multi-point',
+              'Performance-focused design for sound insulation, wind load, air permeability, impact resistance, and water tightness',
             ],
+            heroImage: '/images/products/sliding/sliding-shared-hero.png',
+            crossSectionImages: ['/images/products/sliding/core-cross-1.png','/images/products/sliding/core-cross-2.png'],
           },
           {
             id: 'orion-nova-29',
-            name: 'Orion Nova Series',
-            tagline: 'Advanced thermal performance in a refined 29mm sliding profile',
-            highlights: ['29mm Profile Depth', 'Enhanced Weathersealing'],
+            name: 'Orion 29mm Window Nova Series',
+            tagline: 'Advanced 29mm sliding system with taller opening support and wider glazing compatibility',
+            highlights: ['29mm Platform', 'Max Height 3048mm', 'Laminated & DGU Support'],
             gradient: 'linear-gradient(135deg, #1a3055 0%, #3577aa 100%)',
             badge: '29mm',
             fullDescription:
-              'The Orion Nova Series elevates the sliding experience with an enhanced 29mm profile and upgraded dual-layer weathersealing system. Engineered for climates demanding greater thermal and acoustic performance, it accommodates wider glazing units while maintaining the slim, architectural aesthetic that defines the Orion range.',
+              'The Orion 29mm Window Nova Series is developed for larger and more demanding sliding openings. Compared with the core platform, it supports taller heights, broader glass options including laminated and double-glazed units, and deeper track configurations for expanded panel layouts.',
             specs: [
-              { label: 'Profile Depth', value: '29mm' },
-              { label: 'Frame Material', value: 'Aluminium Alloy 6063-T5' },
-              { label: 'Thermal Break', value: 'Enhanced Polyamide PA66GF25' },
-              { label: 'Glazing Capacity', value: 'Up to 32mm DGU' },
-              { label: 'Maximum Sash Weight', value: '120 kg' },
-              { label: 'Finish Options', value: 'Powder Coat / Anodised / Dual Colour' },
+              { label: 'Maximum Window Height', value: '3048mm (up to 10 ft)' },
+              { label: 'Sash Dimensions', value: 'Height 59mm/45mm, Width 31mm' },
+              { label: 'Interlocking', value: 'Slim Interlock 20mm and 25mm options' },
+              { label: 'Glass Range', value: 'Single 5-8mm, Laminated 5+5 to 15mm, Double up to 20mm' },
+              { label: 'Track Depth - 2 Track', value: 'Top/Bottom 48mm/98mm, Vertical 23mm/15mm' },
+              { label: 'Track Depth - 3 Track', value: 'Top/Bottom 48mm/148mm, Vertical 23mm/15mm' },
+              { label: 'Cutting / Jointing', value: '90 deg frame cutting, 90 deg sash cutting, 90 deg track/sash/slim interlock joints' },
             ],
             features: [
-              'Upgraded polyamide PA66GF25 thermal break for superior insulation values',
-              'Dual-layer pile weatherseal system significantly reduces air and water infiltration',
-              'Heavy-duty stainless steel roller carriage rated to 120 kg sash weight',
-              'Wide glazing rebate accepts units up to 32mm including triple-pane configurations',
-              'Multi-point security locking hardware as standard',
-              'Dual-colour powder coat option for contrasting interior and exterior finishes',
+              'Supports fixed single, fixed double, and adjustable double roller configurations',
+              'Single-point and multi-point locking options for different security requirements',
+              'Suitable for larger-format sliding windows with higher opening height',
+              'Designed for strong envelope performance across sound insulation, wind load, air permeability, impact resistance, and water tightness',
             ],
+            heroImage: '/images/products/sliding/sliding-shared-hero.png',
+            crossSectionImages: ['/images/products/sliding/nova-cross-1.png','/images/products/sliding/nova-cross-2.png'],
           },
           {
             id: 'orion-nebula-31',
@@ -122,6 +129,8 @@ export const categories: Category[] = [
               'Timber-effect foil laminate finish option for a natural aesthetic',
               'Integrated drainage channels prevent water ingress at sill level',
             ],
+            heroImage: '/images/products/sliding/sliding-shared-hero.png',
+            crossSectionImages: ['/images/products/sliding/nebula-cross-1.png'],
           },
         ],
       },
@@ -132,81 +141,58 @@ export const categories: Category[] = [
         products: [
           {
             id: 'gateway-40',
-            name: '40mm Gateway Series',
-            tagline: 'Classic casement profile with modern precision hardware and clean sightlines',
-            highlights: ['40mm Frame Depth', 'Multi-Point Locking'],
+            name: 'Orion 40mm Window Gateway Series',
+            tagline: '40mm casement platform with slim design and robust locking for high wind-use openings',
+            highlights: ['40mm Platform', 'Glazing from 5mm to 24mm', 'Single to Multipoint Locking'],
             gradient: 'linear-gradient(135deg, #1e3a5f 0%, #2d6799 100%)',
             badge: '40mm',
             fullDescription:
-              'The 40mm Gateway Series is a refined, versatile aluminium casement system suited to a broad range of residential and light commercial applications. Its 40mm profile depth delivers a balanced combination of structural performance and slim sightlines, while multi-point locking hardware ensures security and airtight closure.',
+              'The Orion 40mm Window Gateway Series is a slim-profile aluminium casement system designed for balanced aesthetics and durability. It supports practical glazing options, flexible locking selections, and reliable operation for medium-to-large window and door openings under demanding environmental conditions.',
             specs: [
-              { label: 'Profile Depth', value: '40mm' },
-              { label: 'Frame Material', value: 'Aluminium Alloy 6063-T5' },
-              { label: 'Opening Type', value: 'Outward Opening Casement' },
-              { label: 'Hardware', value: 'Multi-Point Friction Stay' },
-              { label: 'Glazing Capacity', value: 'Up to 28mm DGU' },
-              { label: 'Finish Options', value: 'Powder Coat / Anodised' },
+              { label: 'System', value: 'Orion 40mm Window Gateway Series' },
+              { label: 'Design Platform', value: 'European profile concept' },
+              { label: 'Glazing Range', value: 'From 5mm to 24mm' },
+              { label: 'Clip / Jointing', value: 'Square shops clip, corner + T-joint for stronger mechanical joint' },
+              { label: 'Locking Options', value: 'Single-point to multipoint locking systems' },
+              { label: 'Opening Suitability', value: 'Medium opening and high wind-load conditions' },
             ],
             features: [
-              'Slim 40mm sightlines maximise the glazed area and natural light',
-              'Multi-point perimeter locking for enhanced weather resistance and security',
-              'Friction stay hinge system allows stepless ventilation control',
-              'Compatible with 28mm insulating glass units for thermal efficiency',
-              'Fully drained and ventilated frame system prevents moisture accumulation',
-              'Available in a comprehensive RAL powder coat palette',
+              'European-style slim form architecture with modern visual proportions',
+              'Glazing can be installed from inside for improved security workflow',
+              'Internal and external opening system compatibility',
+              'Smooth and effortless operation in daily use',
+              'System tuned for sound insulation, wind load, air permeability, impact resistance, and water tightness',
+              'Suitable for both window and door applications',
             ],
+            heroImage: '/images/products/casement/casement-shared-hero.png',
+            crossSectionImages: ['/images/products/casement/gateway-40-cross-1.png'],
           },
           {
             id: 'gateway-50',
-            name: '50mm Gateway Series',
-            tagline: 'Enhanced casement system delivering superior thermal comfort and acoustic performance',
-            highlights: ['50mm Frame Depth', 'Triple Seal System'],
+            name: 'Orion 50mm Window Gateway Series',
+            tagline: '50mm casement system for larger openings, wider glazing, and stronger locking combinations',
+            highlights: ['50mm Platform', 'Glazing from 5mm to 38mm', 'Tilt & Turn Compatible'],
             gradient: 'linear-gradient(135deg, #152d4e 0%, #1e5280 100%)',
             badge: '50mm',
             fullDescription:
-              'The 50mm Gateway Series expands on the classic Gateway profile with a deeper 50mm frame that accommodates a full triple-seal perimeter gasket and wider glazing units. It is the preferred choice for projects requiring enhanced thermal insulation and acoustic comfort without sacrificing architectural proportion.',
+              'The Orion 50mm Window Gateway Series extends the Gateway range with broader glazing compatibility, larger opening support, and advanced locking options. It is suitable for projects that require stronger structural behavior and premium operational performance, including tilt-and-turn compatible configurations.',
             specs: [
-              { label: 'Profile Depth', value: '50mm' },
-              { label: 'Frame Material', value: 'Aluminium Alloy 6063-T5' },
-              { label: 'Opening Type', value: 'Outward Opening Casement' },
-              { label: 'Seal System', value: 'Triple EPDM Perimeter Seal' },
-              { label: 'Glazing Capacity', value: 'Up to 36mm DGU' },
-              { label: 'Finish Options', value: 'Powder Coat / Anodised / Dual Colour' },
+              { label: 'System', value: 'Orion 50mm Window Gateway Series' },
+              { label: 'Glazing Range', value: 'From 5mm to 38mm' },
+              { label: 'Compatibility', value: 'Tilt & Turn system compatible' },
+              { label: 'Clip / Jointing', value: 'Molding and square shapes clip, corner + T-joint for stronger mechanical joint' },
+              { label: 'Locking Options', value: 'Single-point to multipoint locking systems' },
+              { label: 'Opening Suitability', value: 'Large opening and high wind-load conditions' },
             ],
             features: [
-              'Triple EPDM perimeter seal system dramatically reduces air leakage',
-              'Extended 50mm frame depth improves overall window U-value performance',
-              'Accepts glazing units up to 36mm including high-performance coatings',
-              'Enhanced acoustic performance suitable for urban and high-traffic environments',
-              'Dual-colour finish option allows different interior and exterior aesthetics',
-              'Integrated condensation gutter channel manages moisture at sill level',
+              'Internal and external opening system support for flexible design layouts',
+              'Glazing from inside for secure installation approach',
+              'Smooth and effortless operation despite larger profile format',
+              'Designed for high envelope performance in sound insulation, wind load, air permeability, impact resistance, and water tightness',
+              'Supports door and window variants within the same platform family',
             ],
-          },
-          {
-            id: 'n-series-50',
-            name: 'N 50mm Series',
-            tagline: 'Next-generation narrow casement with 50mm performance profile and minimal sightlines',
-            highlights: ['50mm Profile', 'Narrow Sightlines'],
-            gradient: 'linear-gradient(135deg, #0d1f35 0%, #163d63 100%)',
-            badge: 'N 50mm',
-            fullDescription:
-              'The N 50mm Series represents a new generation of narrow-face casement design — delivering the full thermal and acoustic benefits of a 50mm profile depth while achieving exceptionally slim visible sightlines. Purpose-designed for contemporary, glass-forward architecture where structural performance and minimal framing must coexist.',
-            specs: [
-              { label: 'Profile Depth', value: '50mm' },
-              { label: 'Visible Face Width', value: 'Narrow (Engineered Slim)' },
-              { label: 'Frame Material', value: 'Aluminium Alloy 6063-T5' },
-              { label: 'Thermal Break', value: 'Polyamide PA66GF25' },
-              { label: 'Glazing Capacity', value: 'Up to 36mm DGU' },
-              { label: 'Finish Options', value: 'Powder Coat / Anodised / Dual Colour' },
-            ],
-            features: [
-              'Narrowest possible face width for maximum glass area and transparency',
-              'Full 50mm depth provides the structural performance of a heavyweight system',
-              'Polyamide PA66GF25 thermal break minimises thermal bridging',
-              'Engineered for large-format sash configurations with minimal deflection',
-              'Compatible with high-performance solar control and acoustic glazing units',
-              'Architecturally certified for use in demanding façade applications',
-            ],
+            heroImage: '/images/products/casement/casement-shared-hero.png',
+            crossSectionImages: ['/images/products/casement/gateway-50-cross-1.png'],
           },
         ],
       },
@@ -910,13 +896,13 @@ export const categories: Category[] = [
 
 export function findProduct(catId: string, subId: string, productId: string) {
   const cat = categories.find(c => c.id === catId)
-  const sub = cat?.subcategories.find(s => s.id === subId)
-  const product = sub?.products.find(p => p.id === productId)
+  const sub = cat?.subcategories?.find(s => s.id === subId)
+  const product = sub?.products?.find(p => p.id === productId)
   return { cat, sub, product }
 }
 
 export function getRelatedProducts(catId: string, subId: string, currentProductId: string) {
   const cat = categories.find(c => c.id === catId)
-  const sub = cat?.subcategories.find(s => s.id === subId)
+  const sub = cat?.subcategories?.find(s => s.id === subId)
   return (sub?.products ?? []).filter(p => p.id !== currentProductId)
 }
