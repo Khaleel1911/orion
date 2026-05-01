@@ -66,24 +66,71 @@ export default function AboutPage() {
           </motion.div>
         </section>
 
-        {/* ===== VISION SECTION ===== */}
+        {/* ===== MISSION + VISION SECTION ===== */}
         <section className="py-20 px-6 md:px-16 bg-muted/30">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
+          <div className="max-w-5xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
+              className="text-center mb-10"
             >
               <span className="text-sm uppercase tracking-wider text-primary font-semibold">Our Philosophy</span>
-              <h2 className="text-3xl md:text-4xl font-heading mt-2">OUR VISION</h2>
-              <div className="h-0.5 w-16 bg-primary/40 mx-auto my-4" />
-              <p className="text-muted-foreground text-lg leading-relaxed italic">
-                "To redefine the way people experience their living spaces by seamlessly blending the
-                outdoors with the indoors through technologically advanced and aesthetically superior
-                fenestration systems."
+              <h2 className="text-3xl md:text-4xl font-heading mt-2">What We Stand For</h2>
+              <p className="text-muted-foreground/85 italic mt-3 text-lg">
+                Built on a belief.
+                <br />
+                Driven by a standard.
               </p>
             </motion.div>
+
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="bg-card border border-border rounded-xl p-6 md:p-8"
+              >
+                <p className="text-xs uppercase tracking-[0.26em] text-primary/80 font-semibold mb-3">
+                  Our Mission
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed italic border-l-2 border-primary/35 pl-5">
+                  To give every homeowner and project in Raipur access to precision-engineered
+                  window and door systems, with the consultancy, installation, and aftercare they
+                  have always deserved but rarely received.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="bg-card border border-border rounded-xl p-6 md:p-8"
+              >
+                <p className="text-xs uppercase tracking-[0.26em] text-primary/80 font-semibold mb-3">
+                  Our Vision
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed italic border-l-2 border-primary/35 pl-5">
+                  To become Chhattisgarh&apos;s most trusted fenestration ecosystem, where every
+                  architect, developer, and homeowner knows that choosing Orion World means choosing
+                  performance, accountability, and a standard that outlasts the building itself.
+                </p>
+              </motion.div>
+            </div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-8 text-center text-muted-foreground italic text-base md:text-lg"
+            >
+              We didn&apos;t start Orion World to sell windows. We started it because the homes of
+              Raipur deserved a company that would stay.
+            </motion.p>
           </div>
         </section>
 
@@ -204,9 +251,9 @@ export default function AboutPage() {
                   <span className="text-primary">✦</span> A Shared Vision
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Together, they built Orion World on a clear belief: Good design is not enough — it must be backed
+                  Together, they built Orion World on a clear belief: Good design is not enough it must be backed
                   by engineering, and delivered with precision. By combining structured thinking with hands-on
-                  execution, Orion World operates as a complete system — not just a supplier.
+                  execution, Orion World operates as a complete system not just a supplier.
                 </p>
                 <div className="mt-5 space-y-2">
                   <div className="flex items-start gap-2">
@@ -251,7 +298,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <p className="text-muted-foreground text-sm italic mt-5 border-t border-border pt-4">
-                  Because in modern spaces, every opening matters — and how it is built defines how it performs.
+                  Because in modern spaces, every opening matters and how it is built defines how it performs.
                 </p>
               </motion.div>
             </div>
@@ -305,7 +352,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <h3 className="text-2xl md:text-3xl font-heading">Visit Our Experience Center</h3>
                 <p className="text-muted-foreground flex items-start gap-2">
-                 Raipur - see our systems in action and experience the Orion World difference.
+                 Raipur, see our systems in action and experience the Orion World difference.
                 </p>
                 <button className="mt-2 px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all shadow-md flex items-center gap-2">
                   Contact Us

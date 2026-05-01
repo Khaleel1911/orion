@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { FaQuoteLeft, FaStar } from "react-icons/fa6"
 import { testimonials } from "@/data/testimonials"
 import { useInView } from "@/hooks/useInView"
 
@@ -67,18 +67,26 @@ export default function TestimonialSection() {
   const dotCount = maxStart + 1   // e.g. 5 cards 3-visible → 3 dots
 
   return (
-    <section style={{ background: "#192b45" }} className="overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 py-14 md:py-20">
+    <section className="relative overflow-hidden bg-primary">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at 20% 0%, rgba(111,175,216,0.18), transparent 38%), radial-gradient(circle at 80% 100%, rgba(111,175,216,0.1), transparent 36%)",
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto px-6 lg:px-12 py-14 md:py-20">
 
         {/* ── Header ── */}
         <div
-          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12"
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 md:mb-14"
           ref={headerRef}
         >
           <div>
             <div style={{ overflow: "hidden", marginBottom: "1rem" }}>
               <p
-                className="font-body text-white/30 uppercase"
+                className="font-body text-white/50 uppercase"
                 style={{
                   fontSize: "10px",
                   letterSpacing: "0.45em",
@@ -101,6 +109,18 @@ export default function TestimonialSection() {
                 Client Testimonials
               </h2>
             </div>
+            <p
+              className="mt-3 text-white/65 max-w-md"
+              style={{
+                fontFamily: "var(--font-poppins), Poppins, sans-serif",
+                fontSize: "0.95rem",
+                lineHeight: 1.7,
+                opacity: inView ? 1 : 0,
+                transition: "opacity 0.8s ease 260ms",
+              }}
+            >
+              Real feedback from homeowners, architects, and project teams who trusted Orion World.
+            </p>
           </div>
 
           {/* Prev / Next buttons — top-right */}
@@ -126,6 +146,7 @@ export default function TestimonialSection() {
               transform: `translateX(${trackX}px)`,
               transition: cardW > 0 ? `transform 0.55s ${EASE}` : "none",
               opacity: inView ? 1 : 0,
+              transformOrigin: "left center",
               willChange: "transform",
             }}
           >
@@ -137,63 +158,84 @@ export default function TestimonialSection() {
                   width: cardW > 0 ? `${cardW}px` : "100%",
                 }}
               >
-                <Card
-                  className="h-full transition-all duration-300 group"
+                <article
+                  className="group relative h-full overflow-hidden rounded-2xl border border-white/12 bg-white/[0.05] p-6 md:p-7 transition-all duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.09)",
-                    borderRadius: "0",
-                    boxShadow: "none",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    boxShadow: "0 18px 45px rgba(0,0,0,0.2)",
                     cursor: "default",
                   }}
                 >
-                  <CardContent
-                    className="flex flex-col justify-between h-full"
-                    style={{ padding: "2rem" }}
-                  >
-                    {/* Quote mark */}
-                    <span
-                      className="font-heading text-white/10 leading-none select-none block mb-4"
-                      style={{ fontSize: "3.5rem", lineHeight: 0.8 }}
-                      aria-hidden
-                    >
-                      &ldquo;
-                    </span>
+                  <div
+                    className="absolute -top-14 -right-10 h-36 w-36 rounded-full pointer-events-none"
+                    style={{ background: "radial-gradient(circle, rgba(111,175,216,0.3), rgba(111,175,216,0))" }}
+                  />
 
-                    {/* Quote text */}
-                    <p
-                      className="font-body text-white/75 leading-relaxed flex-1"
-                      style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.05rem)" }}
-                    >
-                      {t.quote}
-                    </p>
+                  <div className="relative flex h-full flex-col justify-between">
+                    <div>
+                      <div className="mb-4 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          {Array.from({ length: 5 }).map((_, starIdx) => (
+                            <FaStar key={starIdx} className="h-3.5 w-3.5 text-[#6fafd8]" />
+                          ))}
+                        </div>
+                        <FaQuoteLeft className="h-5 w-5 text-white/35" />
+                      </div>
 
-                    {/* Divider + attribution */}
+                      <p
+                        className="font-body text-white/80 leading-relaxed"
+                        style={{ fontSize: "clamp(0.92rem, 1.6vw, 1.02rem)" }}
+                      >
+                        {t.quote}
+                      </p>
+                    </div>
+
                     <div className="mt-8">
                       <div
                         style={{
                           height: "1px",
-                          background: "rgba(255,255,255,0.08)",
-                          marginBottom: "1.25rem",
+                          background: "linear-gradient(to right, rgba(255,255,255,0.22), rgba(255,255,255,0.06))",
+                          marginBottom: "1rem",
                         }}
                       />
-                      <div>
-                        <p
-                          className="font-heading text-white"
-                          style={{ fontSize: "0.9rem" }}
+
+                      <div className="flex items-center gap-3">
+                        <div
+                          className="h-10 w-10 rounded-full flex items-center justify-center text-white"
+                          style={{
+                            background: "rgba(111,175,216,0.2)",
+                            border: "1px solid rgba(111,175,216,0.35)",
+                            fontFamily: "var(--font-poppins), Poppins, sans-serif",
+                            fontSize: "0.82rem",
+                            fontWeight: 600,
+                          }}
                         >
-                          {t.author}
-                        </p>
-                        <p
-                          className="font-body text-white/35 mt-0.5"
-                          style={{ fontSize: "0.8rem", letterSpacing: "0.04em" }}
-                        >
-                          {t.role} · {t.location}
-                        </p>
+                          {t.author
+                            .split(" ")
+                            .filter(Boolean)
+                            .slice(0, 2)
+                            .map((w) => w[0]?.toUpperCase())
+                            .join("")}
+                        </div>
+                        <div>
+                          <p
+                            className="font-heading text-white"
+                            style={{ fontSize: "0.95rem" }}
+                          >
+                            {t.author}
+                          </p>
+                          <p
+                            className="font-body text-white/45 mt-0.5"
+                            style={{ fontSize: "0.8rem", letterSpacing: "0.04em" }}
+                          >
+                            {t.role} · {t.location}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </article>
               </div>
             ))}
           </div>
@@ -213,12 +255,12 @@ export default function TestimonialSection() {
               onClick={() => goTo(i)}
               aria-label={`Go to testimonial ${i + 1}`}
               style={{
-                width: i === startIdx ? "28px" : "8px",
-                height: "4px",
-                borderRadius: "2px",
+                width: i === startIdx ? "24px" : "8px",
+                height: "8px",
+                borderRadius: "999px",
                 background: i === startIdx
-                  ? "rgba(255,255,255,0.7)"
-                  : "rgba(255,255,255,0.18)",
+                  ? "#6fafd8"
+                  : "rgba(255,255,255,0.28)",
                 border: "none",
                 padding: 0,
                 cursor: "pointer",
@@ -248,31 +290,32 @@ function NavBtn({
       aria-label={dir === "prev" ? "Previous" : "Next"}
       disabled={disabled}
       style={{
-        width: "44px",
-        height: "44px",
+        width: "46px",
+        height: "46px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        border: "1px solid rgba(255,255,255,0.14)",
-        background: "transparent",
-        color: disabled ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.65)",
+        border: "1px solid rgba(255,255,255,0.22)",
+        background: "rgba(255,255,255,0.04)",
+        color: disabled ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.78)",
         cursor: disabled ? "not-allowed" : "pointer",
-        borderColor: disabled ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.14)",
+        borderColor: disabled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.22)",
         transition: "border-color 0.25s ease, color 0.25s ease, background 0.25s ease",
         flexShrink: 0,
+        borderRadius: "999px",
       }}
       onMouseEnter={e => {
         if (disabled) return
         const el = e.currentTarget
-        el.style.borderColor = "rgba(255,255,255,0.35)"
+        el.style.borderColor = "rgba(111,175,216,0.75)"
         el.style.color = "rgba(255,255,255,0.95)"
-        el.style.background = "rgba(255,255,255,0.06)"
+        el.style.background = "rgba(111,175,216,0.2)"
       }}
       onMouseLeave={e => {
         const el = e.currentTarget
-        el.style.borderColor = disabled ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.14)"
-        el.style.color = disabled ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.65)"
-        el.style.background = "transparent"
+        el.style.borderColor = disabled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.22)"
+        el.style.color = disabled ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.78)"
+        el.style.background = "rgba(255,255,255,0.04)"
       }}
     >
       {dir === "prev"

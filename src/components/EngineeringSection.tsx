@@ -1,10 +1,10 @@
 
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { type CSSProperties, type ReactNode, useState, useEffect, useRef } from "react"
 
 function useInView(threshold = 0) {
-  const ref = useRef(null)
+  const ref = useRef<HTMLElement | null>(null)
   const [inView, setInView] = useState(false)
   useEffect(() => {
     const el = ref.current
@@ -23,12 +23,12 @@ function useInView(threshold = 0) {
    ANIMATION 1 — Precision Cutting (loops)
 ───────────────────────────────────────── */
 function CuttingAnim() {
-  const bladeRef = useRef(null)
-  const splitRef = useRef(null)
-  const hlineRef = useRef(null)
-  const vlineRef = useRef(null)
-  const dimRef   = useRef(null)
-  const timerRef = useRef(null)
+  const bladeRef = useRef<SVGGElement | null>(null)
+  const splitRef = useRef<SVGRectElement | null>(null)
+  const hlineRef = useRef<SVGLineElement | null>(null)
+  const vlineRef = useRef<SVGLineElement | null>(null)
+  const dimRef   = useRef<SVGGElement | null>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const runCycle = () => {
@@ -37,7 +37,7 @@ function CuttingAnim() {
       const hl    = hlineRef.current
       const vl    = vlineRef.current
       const dim   = dimRef.current
-      if (!blade) return
+      if (!blade || !split || !hl || !vl || !dim) return
 
       blade.style.transition = "none"
       blade.style.transform  = "translateX(70px)"
@@ -60,7 +60,9 @@ function CuttingAnim() {
     }
 
     timerRef.current = setTimeout(runCycle, 300)
-    return () => clearTimeout(timerRef.current)
+    return () => {
+      if (timerRef.current !== null) clearTimeout(timerRef.current)
+    }
   }, [])
 
   return (
@@ -102,12 +104,12 @@ function CuttingAnim() {
    ANIMATION 2 — CNC Machining (loops)
 ───────────────────────────────────────── */
 function CNCMachineAnim() {
-  const headRef = useRef(null)
-  const slotRef = useRef(null)
-  const xtxtRef = useRef(null)
-  const bitRef  = useRef(null)
-  const rafRef  = useRef(null)
-  const loopRef = useRef(null)
+  const headRef = useRef<SVGGElement | null>(null)
+  const slotRef = useRef<SVGRectElement | null>(null)
+  const xtxtRef = useRef<SVGTextElement | null>(null)
+  const bitRef  = useRef<SVGGElement | null>(null)
+  const rafRef  = useRef<ReturnType<typeof requestAnimationFrame> | null>(null)
+  const loopRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     let angle = 0
@@ -124,8 +126,8 @@ function CNCMachineAnim() {
       if (slot) slot.setAttribute("width", "0")
       if (xtxt) xtxt.textContent = "X: 00.00"
 
-      let start = null
-      const step = (ts) => {
+      let start: number | null = null
+      const step = (ts: number) => {
         if (!start) start = ts
         const e = ts - start
         angle = (angle + 4) % 360
@@ -146,7 +148,10 @@ function CNCMachineAnim() {
     }
 
     loopRef.current = setTimeout(runCycle, 400)
-    return () => { cancelAnimationFrame(rafRef.current); clearTimeout(loopRef.current) }
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+      if (loopRef.current !== null) clearTimeout(loopRef.current)
+    }
   }, [])
 
   return (
@@ -189,11 +194,11 @@ function CNCMachineAnim() {
    ANIMATION 3 — Weld / Assembly (loops)
 ───────────────────────────────────────── */
 function WeldAnim() {
-  const clipRef  = useRef(null)
-  const torchRef = useRef(null)
-  const checkRef = useRef(null)
-  const rafRef   = useRef(null)
-  const loopRef  = useRef(null)
+  const clipRef  = useRef<SVGRectElement | null>(null)
+  const torchRef = useRef<SVGGElement | null>(null)
+  const checkRef = useRef<SVGGElement | null>(null)
+  const rafRef   = useRef<ReturnType<typeof requestAnimationFrame> | null>(null)
+  const loopRef  = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     const runCycle = () => {
@@ -206,8 +211,8 @@ function WeldAnim() {
       if (torch) { torch.style.transition = "none"; torch.style.opacity = "0" }
       if (check) { check.style.transition = "none"; check.style.opacity = "0"; check.style.transform = "translate(60px,14px) scale(0)" }
 
-      let start = null
-      const step = (ts) => {
+      let start: number | null = null
+      const step = (ts: number) => {
         if (!start) start = ts
         const e = ts - start
         if (e < 400) { rafRef.current = requestAnimationFrame(step); return }
@@ -233,7 +238,10 @@ function WeldAnim() {
     }
 
     loopRef.current = setTimeout(runCycle, 500)
-    return () => { cancelAnimationFrame(rafRef.current); clearTimeout(loopRef.current) }
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+      if (loopRef.current !== null) clearTimeout(loopRef.current)
+    }
   }, [])
 
   return (
@@ -278,7 +286,14 @@ function WeldAnim() {
 /* ─────────────────────────────────────────
    CARD WRAPPER
 ───────────────────────────────────────── */
-function BentoCard({ children, animDelay = 0, inView, className = "" }) {
+type BentoCardProps = {
+  children: ReactNode
+  animDelay?: number
+  inView: boolean
+  className?: string
+}
+
+function BentoCard({ children, animDelay = 0, inView, className = "" }: BentoCardProps) {
   return (
     <div
       className={`relative overflow-hidden rounded-2xl border transition-colors duration-300 group ${className}`}
@@ -310,7 +325,12 @@ function BentoCard({ children, animDelay = 0, inView, className = "" }) {
 /* ─────────────────────────────────────────
    CARD TAG
 ───────────────────────────────────────── */
-function CardTag({ num, spec }) {
+type CardTagProps = {
+  num: string
+  spec: string
+}
+
+function CardTag({ num, spec }: CardTagProps) {
   return (
     <div
       className="inline-flex items-center gap-1.5 rounded px-2 py-0.5 mb-2"
@@ -325,11 +345,17 @@ function CardTag({ num, spec }) {
 /* ─────────────────────────────────────────
    ANIM BOX
 ───────────────────────────────────────── */
-function AnimBox({ children, className = "" }) {
+type AnimBoxProps = {
+  children: ReactNode
+  className?: string
+  style?: CSSProperties
+}
+
+function AnimBox({ children, className = "", style }: AnimBoxProps) {
   return (
     <div
       className={`flex items-center justify-center overflow-hidden p-2 ${className}`}
-      style={{ border: "1px solid rgba(45,103,153,0.15)", background: "rgba(10,15,26,0.6)" }}
+      style={{ border: "1px solid rgba(45,103,153,0.15)", background: "rgba(10,15,26,0.6)", ...style }}
     >
       {children}
     </div>
@@ -344,7 +370,7 @@ export default function EngineeringSection() {
   const EASE = "cubic-bezier(0.16,1,0.3,1)"
 
   return (
-    <section ref={secRef} className="relative overflow-hidden" style={{ background: "#0a0f1a" }}>
+    <section ref={secRef} className="relative overflow-hidden" style={{ background: "var(--primary)" }}>
 
       {/* Grid background */}
       <div

@@ -3,10 +3,12 @@
 import { useRef, useState, useEffect } from "react"
 
 const STEPS = [
-  { n: "01", title: "Consultation",  desc: "Your site, your goals — we listen before we recommend." },
-  { n: "02", title: "System Design", desc: "Specs tailored to your architecture, climate & performance." },
-  { n: "03", title: "Fabrication",   desc: "CNC-precision manufacturing. Every part cut to exact spec." },
-  { n: "04", title: "Installation",  desc: "Clean on-site execution. Performs exactly as engineered." },
+  { n: "01", title: "Free Consultation", desc: "Share your stage, orientation, noise conditions, and budget with us. Duration: 30-45 minutes, free." },
+  { n: "02", title: "Site Audit & Measurement", desc: "Our team measures every opening post-plaster and records sun, wind, and acoustic needs. Free visit." },
+  { n: "03", title: "Written Specification", desc: "You receive opening-wise material, profile, glass, and hardware specs in writing before production." },
+  { n: "04", title: "In-House Manufacturing", desc: "Frames are built in our Raipur facility to approved specs with full QC and no subcontracting." },
+  { n: "05", title: "Precision Installation", desc: "Our trained installers execute sealing, alignment, drainage, and hardware calibration with inspection." },
+  { n: "06", title: "AMC & Aftercare", desc: "From Year 1 onward, AMC support includes calibration, seal checks, cleaning, and service response." },
 ]
 
 const SP  = "cubic-bezier(0.16,1,0.3,1)"
@@ -28,10 +30,10 @@ export default function ProcessSection() {
 
   return (
     <section className="bg-background overflow-hidden">
-      <div ref={ref} className="max-w-5xl mx-auto px-6 py-10 md:py-12">
+      <div ref={ref} className="max-w-6xl mx-auto px-6 py-14 md:py-20">
 
         {/* Header */}
-        <div className="flex items-end justify-between gap-4 mb-10 md:mb-12">
+        <div className="flex items-end justify-between gap-4 mb-12 md:mb-16">
           <div>
             <p
               className="text-[9px] tracking-[0.5em] uppercase text-muted-foreground mb-2"
@@ -41,7 +43,7 @@ export default function ProcessSection() {
                 transition: `opacity .6s ${SP}, transform .6s ${SP}`,
               }}
             >
-              Our Process
+              Your Journey With Us
             </p>
             <h2
               className="font-heading text-3xl md:text-4xl font-medium text-primary leading-none"
@@ -51,17 +53,17 @@ export default function ProcessSection() {
                 transition: `opacity .9s ${SP} 100ms, transform 1s ${SP} 100ms`,
               }}
             >
-              How We Work
+              One company. Every step.
             </h2>
           </div>
           <p
-            className="font-body text-xs text-muted-foreground text-right leading-relaxed max-w-[140px] hidden sm:block"
+            className="font-body text-xs text-muted-foreground text-right leading-relaxed max-w-[220px] hidden sm:block"
             style={{
               opacity: go ? 1 : 0,
               transition: `opacity .8s ${SP} 300ms`,
             }}
           >
-            Four steps from first call to final install.
+            From first consultation to long-term aftercare, one team handles every opening.
           </p>
         </div>
 
@@ -69,7 +71,7 @@ export default function ProcessSection() {
         <div className="relative">
 
           {/* Animated horizontal line — desktop */}
-          <div className="hidden sm:block absolute left-[calc(12.5%+16px)] right-[calc(12.5%+16px)] top-[21px] h-px overflow-hidden">
+          <div className="hidden sm:block absolute left-[calc(8.33%+16px)] right-[calc(8.33%+16px)] top-[21px] h-px overflow-hidden">
             <div
               className="h-full bg-border origin-left"
               style={{
@@ -91,17 +93,22 @@ export default function ProcessSection() {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-y-2 sm:gap-y-3 lg:gap-y-4 lg:gap-x-3 xl:gap-x-4">
             {STEPS.map(({ n, title, desc }, i) => {
               const isHov = hov === i
-              const delay = 350 + i * 130
+              const delay = 320 + i * 170
 
               return (
                 <div
                   key={n}
                   onMouseEnter={() => setHov(i)}
                   onMouseLeave={() => setHov(null)}
-                  className="flex flex-row sm:flex-col sm:items-center gap-5 sm:gap-0 pb-8 sm:pb-0 cursor-default"
+                  className="flex flex-row sm:flex-col sm:items-center gap-5 sm:gap-0 pb-8 sm:pb-0 cursor-default lg:px-2"
+                  style={{
+                    opacity: go ? 1 : 0,
+                    transform: go ? "translateY(0)" : "translateY(110px)",
+                    transition: `opacity .55s ${SP} ${delay}ms, transform .9s ${SP} ${delay}ms`,
+                  }}
                 >
                   {/* Circle */}
                   <div
@@ -112,11 +119,10 @@ export default function ProcessSection() {
                       transform: go
                         ? isHov ? "scale(1.1)" : "scale(1)"
                         : "scale(0)",
-                      opacity: go ? 1 : 0,
                       boxShadow: isHov
                         ? "0 0 0 5px color-mix(in srgb, var(--primary) 12%, transparent)"
                         : "0 0 0 0px transparent",
-                      transition: `background .3s, border-color .3s, transform .55s ${BNC} ${delay}ms, opacity .4s ease ${delay}ms, box-shadow .4s ease`,
+                      transition: `background .3s, border-color .3s, transform .55s ${BNC} ${delay + 60}ms, box-shadow .4s ease`,
                     }}
                   >
                     <span
@@ -134,9 +140,8 @@ export default function ProcessSection() {
                   <div
                     className="sm:mt-5 sm:text-center px-1"
                     style={{
-                      opacity: go ? 1 : 0,
                       transform: go ? "none" : "translateY(10px)",
-                      transition: `opacity .6s ${SP} ${delay + 120}ms, transform .6s ${SP} ${delay + 120}ms`,
+                      transition: `transform .6s ${SP} ${delay + 140}ms`,
                     }}
                   >
                     <h3
@@ -145,7 +150,7 @@ export default function ProcessSection() {
                     >
                       {title}
                     </h3>
-                    <p className="font-body text-xs leading-relaxed text-muted-foreground sm:max-w-[120px] sm:mx-auto">
+                    <p className="font-body text-xs leading-relaxed text-muted-foreground sm:max-w-[170px] sm:mx-auto">
                       {desc}
                     </p>
                   </div>

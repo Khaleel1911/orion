@@ -21,93 +21,9 @@ const navLinks = [
   { label: "About", href: "/about" },
 ];
 
-// Define page-specific navbar styles
-type PageStyle = {
-  background: string;           // background color (light/dark/transparent)
-  textColor: string;            // text color for links
-  activeTextColor: string;      // active link color
-  borderColor: string;          // border bottom when scrolled
-  logoFilter: string;           // CSS filter for logo (e.g., invert for dark bg)
-  useBlur: boolean;             // apply backdrop blur on scroll?
-  buttonBorder: string;         // contact button border
-  buttonText: string;           // contact button text color
-};
-
-const pageStyleMap: Record<string, PageStyle> = {
-  // Default (fallback)
-  default: {
-    background: "transparent",
-    textColor: "text-white/60",
-    activeTextColor: "text-white",
-    borderColor: "border-white/10",
-    logoFilter: "brightness(0) invert(1)", // white logo
-    useBlur: true,
-    buttonBorder: "border-white/25",
-    buttonText: "text-white/80 hover:text-white",
-  },
-  // Home page
-  "/": {
-    background: "transparent",
-    textColor: "text-white/60",
-    activeTextColor: "text-white",
-    borderColor: "border-white/10",
-    logoFilter: "brightness(0) invert(1)",
-    useBlur: true,
-    buttonBorder: "border-white/25",
-    buttonText: "text-white/80 hover:text-white",
-  },
-  // About page – light background, dark text
-  "/about": {
-    background: "#ffffff",
-    textColor: "text-gray-600",
-    activeTextColor: "text-primary", // primary color from your theme
-    borderColor: "border-gray-200",
-    logoFilter: "none", // original dark logo
-    useBlur: false,
-    buttonBorder: "border-primary/30",
-    buttonText: "text-primary hover:text-primary/80",
-  },
-  // Products page – dark solid background
-  "/products": {
-    background: "#192b45", // your primary dark
-    textColor: "text-white/60",
-    activeTextColor: "text-white",
-    borderColor: "border-white/10",
-    logoFilter: "brightness(0) invert(1)",
-    useBlur: false,
-    buttonBorder: "border-white/25",
-    buttonText: "text-white/80 hover:text-white",
-  },
-  // Projects page – another example with accent color
-  "/projects": {
-    background: "#2d6799",
-    textColor: "text-white/70",
-    activeTextColor: "text-white",
-    borderColor: "border-white/15",
-    logoFilter: "brightness(0) invert(1)",
-    useBlur: false,
-    buttonBorder: "border-white/30",
-    buttonText: "text-white/90 hover:text-white",
-  },
-  // Contact page – similar to home
-  "/contact": {
-    background: "transparent",
-    textColor: "text-white/60",
-    activeTextColor: "text-white",
-    borderColor: "border-white/10",
-    logoFilter: "brightness(0) invert(1)",
-    useBlur: true,
-    buttonBorder: "border-white/25",
-    buttonText: "text-white/80 hover:text-white",
-  },
-};
-
 export default function Navbar() {
   const pathname = usePathname(); // e.g., "/about", "/products"
   const [scrolled, setScrolled] = useState(false);
-
-  // Get style for current route (fallback to default)
-  const currentStyle = pageStyleMap[pathname] || pageStyleMap.default;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 24);
@@ -116,19 +32,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Decide final background: if page uses blur and scrolled, apply blur with semi-transparent,
-  // otherwise use solid background from style.
-  const navbarBg = currentStyle.useBlur && scrolled
-    ? `rgba(var(--background-rgb, 0,0,0), 0.7)` // fallback – you might want dynamic
-    : currentStyle.background;
-
-  const shouldBlur = currentStyle.useBlur && scrolled;
+  const isHomeHeroState = pathname === "/" && !scrolled;
+  const navbarBg = isHomeHeroState ? "transparent" : "var(--primary)";
+  const shouldBlur = isHomeHeroState;
+  const logoFilter = "brightness(0) invert(1)";
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-        scrolled ? currentStyle.borderColor : "border-b border-transparent"
+        isHomeHeroState ? "border-b border-transparent" : "border-b border-white/10"
       )}
       style={{
         background: navbarBg,
@@ -149,8 +62,8 @@ export default function Navbar() {
                 className="object-contain"
                 priority
                 style={{
-                  filter: currentStyle.logoFilter,
-                  opacity: scrolled && !currentStyle.useBlur ? 0.9 : 1,
+                  filter: logoFilter,
+                  opacity: scrolled ? 0.95 : 1,
                 }}
               />
             </div>
@@ -169,10 +82,10 @@ export default function Navbar() {
             "after:absolute after:-bottom-0.5 after:left-0",
             "after:h-px after:w-0 after:bg-primary",
             "after:transition-all after:duration-300",
-            "hover:text-primary",                           // 👈 hover = primary
+            "hover:text-white", 
             isActive
-              ? "text-primary after:w-full"                 // 👈 active = primary + underline
-              : currentStyle.textColor + " hover:text-primary"
+              ? "text-white after:w-full after:bg-white"
+              : "text-white/75 hover:text-white after:bg-white"
           )}
         >
           {label}
@@ -189,9 +102,9 @@ export default function Navbar() {
               className={cn(
                 "hidden md:inline-flex items-center",
                 "font-sans text-sm tracking-widest uppercase",
-                currentStyle.buttonText,
                 "border px-6 py-2.5 transition-all duration-200",
-                currentStyle.buttonBorder,
+                "text-white/85 hover:text-white",
+                "border-white/30",
                 "hover:border-current"
               )}
               style={{ letterSpacing: "0.12em" }}
@@ -205,7 +118,7 @@ export default function Navbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={cn("md:hidden rounded-none", currentStyle.textColor, "hover:bg-white/10")}
+                  className={cn("md:hidden rounded-none text-white/80 hover:text-white hover:bg-white/10")}
                   aria-label="Open menu"
                 >
                   <Menu className="w-5 h-5" />

@@ -34,6 +34,14 @@ export const metadata: Metadata = {
   title: "Orion World — Engineered Window & Door Systems",
   description:
     "Precision-engineered aluminium and uPVC window and door systems for modern residential and commercial spaces.",
+  appleWebApp: {
+    title: "Orion World",
+  },
+  icons: {
+    icon: "/favicon2.ico",
+    shortcut: "/favicon2.ico",
+    apple: "/favicon2.ico",
+  },
 };
 
 export default function RootLayout({
