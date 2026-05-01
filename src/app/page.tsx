@@ -13,7 +13,7 @@ export default function HomePage() {
       <HeroSection />
       <WhyOrionSection />
       <ProcessSection />
-      {/* <EngineeringSection /> */}
+      <EngineeringSection />
       <PhilosophySection />
       <ExperienceCenterSection />
       <TestimonialSection />
